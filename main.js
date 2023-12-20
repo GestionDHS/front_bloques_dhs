@@ -28,7 +28,7 @@ document.querySelector('#app').innerHTML = `
          <div class="ventana_codigo">Codigo</div>
       </div>
        
-        <div class="resizer"></div>
+        <div class="resizer_bloques_codigo"></div>
       </div>
       
       <div class="navegador">
@@ -42,10 +42,10 @@ document.querySelector('#app').innerHTML = `
 
 
 //Codigo para el Resizable---------
-let resizer = document.querySelector(".resizer"),
+let resizer_bloques_codigo = document.querySelector(".resizer_bloques_codigo"),
 bloque_codigo = document.querySelector(".bloque_codigo");
 
-function initResizerFn( resizer, bloque_codigo ) {
+function initResizerBloquesCodigoFn( resizer_bloques_codigo, bloque_codigo ) {
 
    // track current mouse position in x let
    let x, w;
@@ -74,36 +74,26 @@ function initResizerFn( resizer, bloque_codigo ) {
    }
 
    function rs_mouseupHandler() {
-      // remove event mousemove && mouseup
+      // remuevo event mousemove && mouseup
       document.removeEventListener("mouseup", rs_mouseupHandler);
       document.removeEventListener("mousemove", rs_mousemoveHandler);
    }
 
-   resizer.addEventListener("mousedown", rs_mousedownHandler);
+   resizer_bloques_codigo.addEventListener("mousedown", rs_mousedownHandler);
 }
 
 
-initResizerFn( resizer, bloque_codigo );
+initResizerBloquesCodigoFn( resizer_bloques_codigo, bloque_codigo );
 
 //Habilito y deshabilito: ventana_codigo, ventana_bloques, ventana_navegador -----------------
-function handlerClicBloque() {
-   let ventanaBloques = document.querySelector('.ventana_bloques');
-   ventanaBloques.style.display = (ventanaBloques.style.display === 'none') ? 'block' : 'none';
- }
- function handlerClicCodigo() {
-   let ventanaCodigo = document.querySelector('.ventana_codigo');
-   ventanaCodigo.style.display = (ventanaCodigo.style.display === 'none' || ventanaCodigo.style.display === '') ? 'block' : 'none';
- }
- function handlerClicNavegador() {
-   let ventanaNavegador = document.querySelector('.ventana_navegador');
-   console.log(ventanaNavegador)
-   console.log(ventanaNavegador.style.display)
-   ventanaNavegador.style.display = (ventanaNavegador.style.display === 'none') ? 'block' : 'none';
+ function handlerClicVentana(e){
+   let dicionario_Ventana = {"btn-bloque":'.ventana_bloques',"btn-codigo":'.ventana_codigo',"btn-navegador":'.ventana_navegador'}
+   let elemento_ventana = document.querySelector(dicionario_Ventana[e.target.id]);
+   elemento_ventana.style.display = (e.target.id == "btn-codigo") ? ((elemento_ventana.style.display === 'none' || elemento_ventana.style.display === '') ? 'block' : 'none'):(elemento_ventana.style.display === 'none') ? 'block' : 'none';
  }
  let btnBloque = document.querySelector("#btn-bloque");
  let btnCodigo = document.querySelector("#btn-codigo");
  let btnNavegador = document.querySelector("#btn-navegador");
- btnBloque.addEventListener("click", handlerClicBloque);
- btnCodigo.addEventListener("click", handlerClicCodigo);
- btnNavegador.addEventListener("click", handlerClicNavegador);
- 
+ btnBloque.addEventListener("click", handlerClicVentana);
+ btnCodigo.addEventListener("click", handlerClicVentana);
+ btnNavegador.addEventListener("click", handlerClicVentana);
