@@ -151,6 +151,7 @@ nav {
   height: 100%;
   display: flex;
   border: none;
+  background-color: rgb(143, 143, 143);
   /* grid-template-columns: 500px auto;
   background-color: #747bff; */
 }
@@ -160,11 +161,11 @@ nav {
   min-width: 30px;
   position: relative;
   height: 100%;
-  width: 50%;
+  width: 100%;
   border: none;
-  background-color: #333;
+  background-color: #1a1a1a;
 }
-.apagar_bloque_cod{
+.fondo_gris{
    background-color: rgb(143, 143, 143);
 }
 /* el nav de bloque_codigo */
@@ -241,7 +242,9 @@ nav {
   position: absolute;
   background-color: #787978;
 }
-
+.resizer_hidden{
+  visibility: hidden;
+}
 .resizer_css:hover {
   background-color: #5350f5f3;
 }
@@ -249,6 +252,7 @@ nav {
 /* Lado derecho - navegador */
 .navegador {
   min-width: 30px;
+  width: 100%;
   flex-grow: 1;
   flex-wrap: wrap;
   position: relative;
