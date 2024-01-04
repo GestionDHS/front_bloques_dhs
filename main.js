@@ -35,8 +35,8 @@ document.querySelector('#app').innerHTML = `
             <div class="body_codigo flex_col hidden">
                <div class="ventana_codigo flex_row">
                   <div id="codigo-html">codigo HTML</div>
-                  <div id="codigo-css">codigo CSS</div>
-                  <div id="codigo-js">codigo JS</div>
+                  <div id="codigo-css" class="hidden">codigo CSS</div>
+                  <div id="codigo-js" class="hidden">codigo JS</div>
                </div>
             </div>
          </div>
