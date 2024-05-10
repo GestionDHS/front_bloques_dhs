@@ -1,5 +1,7 @@
 import '../../style.css'
-
+import { configurarYRenderizarToolbox} from '../../utils/Funciones.js';
+import ControladorStandard from "../../bloques/Controlador";
+import {Dhs_Categorias} from '../../clases/Dhs-categorias';
 
 document.querySelector('#app').innerHTML = `
   <main>
@@ -196,3 +198,28 @@ btnsMenores["btn-consola"].addEventListener("click", handelClickVisibilityPanels
 btnsMenores["btn-html"].addEventListener("click", handelClickVisibilityWorkSpaces)
 btnsMenores["btn-css"].addEventListener("click", handelClickVisibilityWorkSpaces)
 btnsMenores["btn-js"].addEventListener("click", handelClickVisibilityWorkSpaces)
+
+
+
+// BLOCKLY ------------------------------------------------------
+const estadoWorkspaceInicial = '{"blocks":{"languageVersion":0,"blocks":[{"type":"on_execute","id":"rwW]g?!-iwJNk))r*~^C","x":61,"y":69}]}}';
+
+window.miControlador = new ControladorStandard(estadoWorkspaceInicial);
+const categoria=new Dhs_Categorias()
+const categoriaElegida= categoria.obtenerCategoriasNecesarias(["Eventos","Movimientos","Acciones","Repeticiones"])
+const ordenJerarquicoBloques = [
+  ["on_execute", "Eventos"],
+  ["move_classic_simple", "Movimientos"],
+  ["abrir_cofre", "Acciones"],
+  ["repeat_times", "Repeticiones"],
+];
+
+const funcionesAExponer=["moverDerecha","moverAbajo","moverArriba","moverIzquierda","abrirCofre"]
+
+configurarYRenderizarToolbox(
+   miControlador,
+   categoriaElegida,
+   ordenJerarquicoBloques,
+   estadoWorkspaceInicial,
+   funcionesAExponer
+ );
