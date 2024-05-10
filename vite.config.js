@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import { resolve } from "path";
-// const root = resolve(__dirname, "src");
-// const outDir = resolve(__dirname, "dist");
+const root = resolve(__dirname, "src");
+const outDir = resolve(__dirname, "dist");
 // const procedure_path= resolve(__dirname, '@blockly/block-shareable-procedures/');
 // console.log(procedure_path)
 // import {registerProcedureSerializer} from ${procedure_path};
@@ -14,21 +14,22 @@ export default defineConfig({
   //   registerProcedureSerializer(),
   // ],
   base: "/",
-//   root,
+  root,
   build: {
-//   outDir,
-    // emptyOutDir: true,
+    outDir,
+    emptyOutDir: true,
     rollupOptions: {
-      input: "index.html"
-        //main: resolve(root, "index.html"),
-        // act1: resolve(root, "pages", "actividad001", "act.html"),
-      
+      input: {
+        main: resolve(root, "index.html"),
+        primerPaso:(root, "pages", "frontPrimerPaso", "index.html"),
+        act1: resolve(root, "pages", "actividad001", "act.html"),
+      }
     },
   },
-//   assetsDir: "img",
-//   assetsInclude: [
-//     "./interprete/acorn.js",
-//     "./interprete/interpreter.js",
-//     "**/*.css?type=text/css",
-//   ],
+    assetsDir: "img",
+    assetsInclude: [
+      "./interprete/acorn.js",
+      "./interprete/interpreter.js",
+      "**/*.css?type=text/css",
+    ],
 });
