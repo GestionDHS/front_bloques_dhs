@@ -7,6 +7,7 @@ export default class ConfiguradorBloques {
             contents: []
         }
         this.galeria = new DHS_Gallery
+        this.HtmlGenerator = new Blockly.Generator('HTML');
     }
 
     crearCategoriaToolbox(datosCategoria) {
@@ -113,6 +114,55 @@ export default class ConfiguradorBloques {
     // ---------------
 
     // MOVIMIENTOS CLASICOS SIN PARAMETROS (SIMPLE)
+    base_frame(){ 
+        Blockly.common.defineBlocksWithJsonArray([
+            {
+                "type": "base_frame",
+                "message0": "document %1 header %2 %3 content %4 %5",
+                "args0": [
+                {
+                  "type": "input_dummy"
+                },
+                {
+                  "type": "input_dummy"
+                },
+                {
+                  "type": "input_statement",
+                  "name": "head",
+                  "check": "header"
+                },
+                {
+                  "type": "input_dummy"
+                },
+                {
+                  "type": "input_statement",
+                  "name": "body",
+                  "check": "html"
+                }
+                ],
+                "colour": 0,
+                "tooltip": "",
+                "helpUrl": "http://www.w3schools.com/tags/tag_html.asp"
+            }
+       ])
+
+        this.HtmlGenerator['baseframe'] = function(block) {
+            var statements_head = HtmlGenerator.statementToCode(block, 'head');
+            var statements_body = HtmlGenerator.statementToCode(block, 'body');
+          
+            var code = '<!DOCTYPE HTML>\n<html>\n<head>\n  <meta charset="utf-8">\n'
+              + statements_head
+              + "</head>\n\n<body>\n"
+              + statements_body
+              + "</body>\n</html>\n";
+          
+            return code;
+          };
+          return {
+            type: "base_frame",
+            kind: "block",
+        }
+      }
     move_down_simple() {
         Blockly.common.defineBlocksWithJsonArray([
             {

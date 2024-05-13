@@ -28,8 +28,8 @@ export default defineConfig({
   },
     assetsDir: "img",
     assetsInclude: [
-      "./interprete/acorn.js",
-      "./interprete/interpreter.js",
+      "./interpreter/acorn.js",
+      "./interpreter/interpreter.js",
       "**/*.css?type=text/css",
     ],
 });

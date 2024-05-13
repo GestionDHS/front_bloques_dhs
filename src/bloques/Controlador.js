@@ -206,6 +206,7 @@ class Controlador {
   }
 
   crearInyectarWorkspace(idElemento, objetoConfig) {
+    console.log("revienta")
     this.workspace = Blockly.inject(idElemento, objetoConfig);
   }
 

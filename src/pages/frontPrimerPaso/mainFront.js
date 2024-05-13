@@ -206,12 +206,13 @@ const estadoWorkspaceInicial = '{"blocks":{"languageVersion":0,"blocks":[{"type"
 
 window.miControlador = new ControladorStandard(estadoWorkspaceInicial);
 const categoria=new Dhs_Categorias()
-const categoriaElegida= categoria.obtenerCategoriasNecesarias(["Eventos","Movimientos","Acciones","Repeticiones"])
+const categoriaElegida= categoria.obtenerCategoriasNecesarias(["Eventos","Movimientos","Acciones","Repeticiones","Funciones"])
 const ordenJerarquicoBloques = [
   ["on_execute", "Eventos"],
   ["move_classic_simple", "Movimientos"],
   ["abrir_cofre", "Acciones"],
   ["repeat_times", "Repeticiones"],
+  ["base_frame", "Funciones"],
 ];
 
 const funcionesAExponer=["moverDerecha","moverAbajo","moverArriba","moverIzquierda","abrirCofre"]

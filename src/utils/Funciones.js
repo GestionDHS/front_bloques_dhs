@@ -134,22 +134,22 @@ export const configurarYRenderizarToolbox = function (
 ) {
   categoriaElegida.tipos.forEach((cat) =>
     miControlador.ConfiguradorBloques.crearCategoriaToolbox(cat)
-  );
+);
 
-  ordenJerarquicoBloques.forEach((bl) => {
-    miControlador.ConfiguradorBloques.configurarUnBloqueCustomStandard(...bl);
-  });
-
-  miControlador.crearInyectarWorkspace("dhs-blockly-div", {
-    toolbox: miControlador.ConfiguradorBloques.toolbox,
-    theme: "themeDH",
-    renderer: "thrasos",
-    zoom: {
-      controls: true,
-      wheel: true,
-      pinch: true,
-    },
-  });
+ordenJerarquicoBloques.forEach((bl) => {
+  miControlador.ConfiguradorBloques.configurarUnBloqueCustomStandard(...bl);
+});
+//El id que pasemos va depender de si es HTML,CSS o JS
+miControlador.crearInyectarWorkspace("wsp-html", {
+  toolbox: miControlador.ConfiguradorBloques.toolbox,
+  theme: "themeDH",
+  renderer: "thrasos",
+  zoom: {
+    controls: true,
+    wheel: true,
+    pinch: true,
+  },
+});
   miControlador.setearYCargarBloquesIniciales(
     JSON.parse(bloquesPrecargadosJSON)
   );
@@ -162,6 +162,7 @@ export const configurarYRenderizarToolbox = function (
   // try{
   const callBackJuego = miControlador.juego.generarCallbackParaInterprete();
   miControlador.setearCallbackInterprete((interpreter, globalObject) => {
+    console.log(globalObject)
     miControlador.callbackInterpreteStandard(interpreter, globalObject);
     callBackJuego(interpreter, globalObject);
   });
