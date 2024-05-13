@@ -55,6 +55,18 @@ export default Blockly.Theme.defineTheme('themeDH', {
             "colourPrimary": "#0fbd8c",
             'colourTertiary':'#0b8e69'
         },
+        "html_blocks": {
+            "colourPrimary": "#0fbd8c",
+            'colourTertiary':'#0b8e69'
+        },
+        "css_blocks": {
+            "colourPrimary": "#0fbd8c",
+            'colourTertiary':'#0b8e69'
+        },
+        "js_blocks": {
+            "colourPrimary": "#0fbd8c",
+            'colourTertiary':'#0b8e69'
+        },
 
      },
     'componentStyles': {

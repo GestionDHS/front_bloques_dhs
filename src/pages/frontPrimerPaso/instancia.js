@@ -1,59 +1,10 @@
 import '../../style.css'
 import { configurarYRenderizarToolbox} from '../../utils/Funciones.js';
-import ControladorStandard from "../../bloques/Controlador";
-import {Dhs_Categorias} from '../../clases/Dhs-categorias';
+import ControladorStandard from "../../bloques/Controlador.js";
+import {Dhs_Categorias} from '../../clases/Dhs-categorias.js';
+import { template } from "../../utils/Template.js";
 
-document.querySelector('#app').innerHTML = `
-  <main>
-   <nav>
-   <ul class="nav_ul_principal">
-      <li id="play">Play</li>
-      <li><button id="btn-bloque" class="button button_focus btn_relative">Bloques</button></li>
-      <li><button id="btn-codigo" class="button btn_relative">Codigo</button></li>
-      <li><button id="btn-navegador" class="button button_focus btn_relative">Navegador</button></li>
-      <li id="alternar">Alternar</li>
-    </ul>
-   </nav>
-   <secrion class="contenedor" id="contenedor">
-      <div class="bloque_codigo felx_col content-box" id="bloque_codigo">
-         <div class="head_bloque_codigo">
-            <ul class="ul_nav_secundario">
-               <li><button id="btn-html" class="button button_focus btn_relative">HTML</button></li>
-               <li><button id="btn-css" class="button btn_relative">CSS</button></li>
-               <li><button id="btn-js" class="button btn_relative">JS</button></li>
-            </ul>
-         </div>
-         <div class="body_bloque_codigo">
-            <div class="body_bloque flex_col" id="body_bloque">
-               <div class="ventana_bloques flex_row">
-                  <div id="wsp-html">Workspace HTML</div>
-                  <div id="wsp-css" class="hidden">Workspace CSS</div>
-                  <div id="wsp-js" class="hidden">Workspace JS</div>
-               </div>
-               <div class="resizer_css hidden" id="r2"></div>
-            </div>
-            <div class="body_codigo flex_col hidden" id="body_codigo">
-               <div class="ventana_codigo flex_row">
-                  <div id="codigo-html">codigo HTML</div>
-                  <div id="codigo-css" class="hidden">codigo CSS</div>
-                  <div id="codigo-js" class="hidden">codigo JS</div>
-               </div>
-            </div>
-         </div>
-         <div class="resizer_css resizer" id="r1"></div>
-      </div>
-      
-      <div class="navegador flex_row " id="navegador">
-         <div class="ventana_navegador">
-            <h2>Navegador</h2>
-            <button id="btn-consola">consola</button>
-         </div>
-         <div class="ventana_consola hidden">Consola</div>
-      </div>
-   </section>
-   
-  </main>
-`
+document.querySelector('#app').innerHTML = template(``)
 
 //Me traido todo de los dos paneles izq y derecho: body_bloque(cajaIzqDeR2),body_codigo(cajaDerechaDeR2),bloque_codigo(cajaIzqR1),navegador(cajaDerechaR1)
 const cajas = (function () {
@@ -202,20 +153,16 @@ btnsMenores["btn-js"].addEventListener("click", handelClickVisibilityWorkSpaces)
 
 
 // BLOCKLY ------------------------------------------------------
-const estadoWorkspaceInicial = '{"blocks":{"languageVersion":0,"blocks":[{"type":"on_execute","id":"rwW]g?!-iwJNk))r*~^C","x":61,"y":69}]}}';
+const estadoWorkspaceInicial = '{"blocks":{"languageVersion":0,"blocks":[{"type":"base_frame","id":"rwW]g?!-iwJNk))r*~^C","x":61,"y":69}]}}';
 
 window.miControlador = new ControladorStandard(estadoWorkspaceInicial);
 const categoria=new Dhs_Categorias()
-const categoriaElegida= categoria.obtenerCategoriasNecesarias(["Eventos","Movimientos","Acciones","Repeticiones","Funciones"])
+const categoriaElegida= categoria.obtenerCategoriasNecesarias(["Funciones"])
 const ordenJerarquicoBloques = [
-  ["on_execute", "Eventos"],
-  ["move_classic_simple", "Movimientos"],
-  ["abrir_cofre", "Acciones"],
-  ["repeat_times", "Repeticiones"],
   ["base_frame", "Funciones"],
 ];
 
-const funcionesAExponer=["moverDerecha","moverAbajo","moverArriba","moverIzquierda","abrirCofre"]
+const funcionesAExponer=[]
 
 configurarYRenderizarToolbox(
    miControlador,

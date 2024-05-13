@@ -27,6 +27,15 @@ export class Dhs_Categorias {
     {
       name: "Sensores",
       categorystyle: "sensor",
+    },{
+      name: "HTML",
+      categorystyle: "html_blocks",
+    },{
+      name: "CSS",
+      categorystyle: "css_blocks",
+    },{
+      name: "JS",
+      categorystyle: "js_blocks",
     },
     {
       kind:"category",
