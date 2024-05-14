@@ -5,18 +5,6 @@ export class Dhs_Categorias {
       categorystyle: "execute",
     },
     {
-      name: "Movimientos",
-      categorystyle: "movement",
-    },
-    {
-      name: "Lápiz",
-      categorystyle: "pencil",
-    },
-    {
-      name: "Acciones",
-      categorystyle: "action",
-    },
-    {
       name: "Repeticiones",
       categorystyle: "loops",
     },

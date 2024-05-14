@@ -132,6 +132,7 @@ export const configurarYRenderizarToolbox = function (
   bloquesPrecargadosJSON,
   funcionesAExporner
 ) {
+  console.log(categoriaElegida)
   categoriaElegida.tipos.forEach((cat) =>
     miControlador.ConfiguradorBloques.crearCategoriaToolbox(cat)
 );
@@ -156,21 +157,22 @@ miControlador.crearInyectarWorkspace("wsp-html", {
   miControlador.setearEventoCambioWorkspaceStandard();
   miControlador.habilitarDesactivarHuerfanos();
   miControlador.crearFuncionesGlobalesStandard();
-  funcionesAExporner.forEach((unaFuncion) =>
-    miControlador.juego.agregarGlobalConCallback(unaFuncion)
-  );
+  // funcionesAExporner.forEach((unaFuncion) =>
+  //   miControlador.juego.agregarGlobalConCallback(unaFuncion)
+  // );
   // try{
-  const callBackJuego = miControlador.juego.generarCallbackParaInterprete();
-  miControlador.setearCallbackInterprete((interpreter, globalObject) => {
-    console.log(globalObject)
-    miControlador.callbackInterpreteStandard(interpreter, globalObject);
-    callBackJuego(interpreter, globalObject);
-  });
+  // const callBackJuego = miControlador.juego.generarCallbackParaInterprete();
+  // miControlador.setearCallbackInterprete((interpreter, globalObject) => {
+  //   console.log(globalObject)
+  //   miControlador.callbackInterpreteStandard(interpreter, globalObject);
+  //   callBackJuego(interpreter, globalObject);
+  // });
   // }catch(e){
   //   throw new Error(e,"revento, estoy en Funciones.js configurarYRenderizarToolbox")
   // }
 
 };
+
 export const arraysSonIguales = function (arr1, arr2) {
   const arr1Ordenado = arr1.sort();
   const arr2Ordenado = arr2.sort();

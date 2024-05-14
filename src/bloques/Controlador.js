@@ -20,7 +20,7 @@ class Controlador {
     palabrasReservadas = ["resaltarBloque", "quitarResaltadoBloqueLuegoAvanzar"]
   ) {
     // ELEMENTOS IMPORTANTES
-  
+
     this.estadoWorkspaceInicial = estadoWorkspaceInicial;
     this.ConfiguradorBloques = new ConfiguradorBloques();
     this.necesitaEsperarReinicio = false;
@@ -180,10 +180,15 @@ class Controlador {
         } else {
           if (!this.debeDetenerEjecucion) {
             codigoCrudo = this.generarCodigoCrudo();
-            if (this.panelCodigoGenerado.value != codigoCrudo) {
-              this.detenerEjecucion();
-              this.quitarTodosLosResaltados();
-            }
+            const codigoHtmlNode = document.getElementById("codigo-html")
+            // console.log(codigoCrudo)
+            const textareaNode = document.createElement('textarea');          
+            const mostrarOup = new MostradorOutput(codigoHtmlNode,textareaNode)
+            mostrarOup.agregarTexto(codigoCrudo)
+            // if (this.panelCodigoGenerado.value != codigoCrudo) {
+            //   this.detenerEjecucion();
+            //   this.quitarTodosLosResaltados();
+            // }
           }
           this.mostrarCodigoCrudo();
         }
@@ -206,7 +211,7 @@ class Controlador {
   }
 
   crearInyectarWorkspace(idElemento, objetoConfig) {
-    console.log("revienta")
+    console.log(objetoConfig)
     this.workspace = Blockly.inject(idElemento, objetoConfig);
   }
 
@@ -243,7 +248,7 @@ class Controlador {
   }
   verificarUsoDeBloquesInternos(bloqueABuscar) {// devuelve cantidad de bloques encontrados en todo el WS
     let cantidadDeBloquesEnW = this.workspace.getBlocksByType(bloqueABuscar, "LTR")
-    let cantBloquesHijosDelOnExecute = cantidadDeBloquesEnW.filter(b=>this.verificarEsHuerfano(b))
+    let cantBloquesHijosDelOnExecute = cantidadDeBloquesEnW.filter(b => this.verificarEsHuerfano(b))
     return cantBloquesHijosDelOnExecute.length
   }
   obtenerbloque(bloqueABuscar) {
@@ -279,14 +284,21 @@ class Controlador {
     this.setearPrefijoBloques(null);
     this.setearSufijoBloques(null);
     let codigoCrudo;
+
     if (todoElWorskpace) {
       codigoCrudo = Blockly.JavaScript.workspaceToCode(this.workspace);
+      //this.generarHTML()
     }
     this.setearPrefijoBloques(this.prefijo);
     this.setearSufijoBloques(this.sufijo);
     return codigoCrudo;
   }
-
+  generarHTML(event) {
+    this.HtmlGenerator = new Blockly.Generator('HTML');
+    var code = this.HtmlGenerator.workspaceToCode(this.workspace);
+    document.getElementById('codigo-html').innerText = code;
+    document.getElementById('navegador').src = "data:text/html;charset=utf-8," + encodeURIComponent(code);
+  }
   mostrarCodigoCrudo() {
     if (this.panelCodigoGenerado) {
       this.panelCodigoGenerado.value = this.generarCodigoCrudo();
@@ -488,7 +500,7 @@ class Controlador {
       }
     }
   }
-  
+
   cantidadDeHijosDeUnBloque(bloque) {
     let cantidad = 0
     let arrTopBlocks = this.obtenerbloque(bloque)
@@ -521,7 +533,7 @@ class Controlador {
   recorrerPasos(sincronico = true, callback = this.callbackInterprete) {
     const necesitaReiniciar = this.necesitaEsperarReinicio;
     this.juego?.reiniciar();
-    this.test.ejecucionSincronica && this.test.callbackSincronico(this.juego,this.test.listaDePersonajesVieja)
+    this.test.ejecucionSincronica && this.test.callbackSincronico(this.juego, this.test.listaDePersonajesVieja)
     this.necesitaEsperarReinicio = true;
     this.juego?.setearSincronicidad(sincronico);
     this.anularInterpreteIterativo();
@@ -555,8 +567,8 @@ class Controlador {
   }
 
   hacerPasosHastaBandera() {
-    if (this.hacerPausaQuitarResaltado) {return}
-    if (this.debeDetenerEjecucion) {return}
+    if (this.hacerPausaQuitarResaltado) { return }
+    if (this.debeDetenerEjecucion) { return }
     this.hacerPausaResaltar = false;
     while (
       this.hayCodigoPendiente &&
@@ -741,12 +753,17 @@ export default class ControladorStandard extends Controlador {
 }
 
 class MostradorOutput {
-  constructor(elementoTextArea) {
+  constructor(elemetoPadre,elementoTextArea) {
     this.elemento = elementoTextArea;
+    this.elementoPadre = elemetoPadre;
     this.blanquearTodo();
+    this.elementoPadre && this.elementoPadre.appendChild(this.elemento);
+    this.elemento.style.width = 'auto';
+    this.elemento.style.height = '200px';
   }
   blanquearTodo() {
     this.elemento.value = "";
+    this.elementoPadre.innerHTML = "";
   }
   marcarInicio() {
     this.elemento.value = "OUTPUT DEL PROGRAMA:\n\n";

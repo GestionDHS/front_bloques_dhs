@@ -1,4 +1,3 @@
-"use strict";
 
 
 var HtmlGenerator = new Blockly.Generator('HTML');
