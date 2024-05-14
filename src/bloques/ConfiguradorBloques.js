@@ -11,7 +11,6 @@ export default class ConfiguradorBloques {
     }
 
     crearCategoriaToolbox(datosCategoria) {
-        console.log("crearCategoriaToolbox")
         this.toolbox.contents.push({
             kind: "category",
             name: datosCategoria.name,

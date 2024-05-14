@@ -132,7 +132,6 @@ export const configurarYRenderizarToolbox = function (
   bloquesPrecargadosJSON,
   funcionesAExporner
 ) {
-  console.log(categoriaElegida)
   categoriaElegida.tipos.forEach((cat) =>
     miControlador.ConfiguradorBloques.crearCategoriaToolbox(cat)
 );
@@ -144,6 +143,12 @@ ordenJerarquicoBloques.forEach((bl) => {
 const divWspHTML = document.getElementById("wsp-html")
 divWspHTML.innerHTML=""
 divWspHTML.style.width= "100%"
+// const workspace = Blockly.getMainWorkspace();
+
+const newWidth = "100%";
+const newHeight = "100%";
+
+
 miControlador.crearInyectarWorkspace("wsp-html", {
   toolbox: miControlador.ConfiguradorBloques.toolbox,
   theme: "themeDH",
@@ -153,7 +158,12 @@ miControlador.crearInyectarWorkspace("wsp-html", {
     wheel: true,
     pinch: true,
   },
+  resize: true,
+  parentWidth: null,
+  parentHeight: null
 });
+// miControlador.workspace.options.resize = true
+Blockly.svgResize(miControlador.workspace, newWidth, newHeight);
   miControlador.setearYCargarBloquesIniciales(
     JSON.parse(bloquesPrecargadosJSON)
   );
