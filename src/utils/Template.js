@@ -48,7 +48,7 @@ export function template(element) {
       </div>
       
       <div class="navegador flex_row " id="navegador">
-         <div class="ventana_navegador">
+         <div class="ventana_navegador" id="ventana_navegador">
             <h2>Navegador</h2>
             <button id="btn-consola">consola</button>
          </div>

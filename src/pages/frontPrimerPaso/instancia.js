@@ -16,6 +16,14 @@ const cajas = (function () {
    cajas['panel_derecho_r1'] = document.getElementById('navegador');
    return cajas;
 }());
+const ventanas = (function () {
+   let ventanas = {}
+   ventanas['ventana_bloques'] = document.getElementById('ventana_bloques');
+   ventanas['ventana_codigo'] = document.getElementById('ventana_codigo');
+   ventanas['ventana_navegador'] = document.getElementById('ventana_navegador');
+   ventanas['ventana_consola'] = document.getElementById('ventana_consola');
+   return ventanas;
+}());
 
 //Resizers
 let r1 = document.querySelector("#r1")
@@ -95,7 +103,10 @@ function handelClickVisibilityPanels(e) {
       btnsMenores["btn-css"].classList.remove("button_focus")
       btnsMenores["btn-js"].classList.remove("button_focus")
    } else {
-      div_body_codigo.style.width = !btnsMayores["btn-bloque"].classList.contains("button_focus") && btnsMayores["btn-codigo"].classList.contains("button_focus") && "100%"
+      console.log(elemento_ventana)
+      ventanas.ventana_bloques.style.width="100%"
+      div_body_codigo.style.width = !btnsMayores["btn-bloque"].classList.contains("button_focus") && btnsMayores["btn-codigo"].classList.contains("button_focus") ? "100%" : "50%"
+      div_body_bloque.style.width = btnsMayores["btn-bloque"].classList.contains("button_focus") && !btnsMayores["btn-codigo"].classList.contains("button_focus") ? "100%" : "50%"
       div_bloque_codigo.classList.remove("hidden")
       div_bloque_codigo.classList.remove("fondo_gris")
       btnsMayores["btn-bloque"].classList.contains("button_focus") && prenderBtnSegunDiv(e.target)

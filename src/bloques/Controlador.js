@@ -758,8 +758,8 @@ class MostradorOutput {
     this.elementoPadre = elemetoPadre;
     this.blanquearTodo();
     this.elementoPadre && this.elementoPadre.appendChild(this.elemento);
-    this.elemento.style.width = 'auto';
-    this.elemento.style.height = '200px';
+    this.elemento.style.width = '100%';
+    this.elemento.style.height = '100vh';
   }
   blanquearTodo() {
     this.elemento.value = "";

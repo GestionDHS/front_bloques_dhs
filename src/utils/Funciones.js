@@ -141,6 +141,9 @@ ordenJerarquicoBloques.forEach((bl) => {
   miControlador.ConfiguradorBloques.configurarUnBloqueCustomStandard(...bl);
 });
 //El id que pasemos va depender de si es HTML,CSS o JS
+const divWspHTML = document.getElementById("wsp-html")
+divWspHTML.innerHTML=""
+divWspHTML.style.width= "100%"
 miControlador.crearInyectarWorkspace("wsp-html", {
   toolbox: miControlador.ConfiguradorBloques.toolbox,
   theme: "themeDH",
