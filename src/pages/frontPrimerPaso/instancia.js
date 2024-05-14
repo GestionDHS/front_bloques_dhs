@@ -14,7 +14,8 @@ const categoria = new Dhs_Categorias()
 const categoriaElegida = categoria.obtenerCategoriasNecesarias(["Funciones"])
 const ordenJerarquicoBloques = [
    ["base_frame", "Funciones"],
-   ["html", "Funciones"],
+   ["title", "Funciones"],
+   ["plaintext", "Funciones"],
 ];
 configurarYRenderizarToolbox(
    miControlador,

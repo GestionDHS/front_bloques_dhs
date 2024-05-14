@@ -112,34 +112,74 @@ export default class ConfiguradorBloques {
         }
       }
 
-  html(){
-    Blockly.common.defineBlocksWithJsonArray([{
-        "type": "html",
-        "message0": "document %1 %2",
+ title(){
+    Blockly.common.defineBlocksWithJsonArray([
+      {
+        "type": "title",
+        "message0": "title %1",
         "args0": [
-        {
-          "type": "input_dummy"
-        },
         {
           "type": "input_statement",
           "name": "content",
-          "check": "document"
+          "check": "html"
         }
         ],
+        "previousStatement": "header",
+        "nextStatement": "header",
         "colour": 0,
         "tooltip": "",
-        "helpUrl": "http://www.w3schools.com/tags/tag_html.asp"
+        "helpUrl": "http://www.w3schools.com/tags/tag_html.asp",
+      
       }])
 
-      Blockly.JavaScript.forBlock['html'] = function(block) {
-        var statements_content = Blockly.JavaScript.statementToCode(block, 'content');
-        var code = '<!DOCTYPE HTML>\n<html>\n' + statements_content + '</html>\n';
+      Blockly.JavaScript.forBlock['title'] = function(block) {
+       var statements_content = Blockly.JavaScript.statementToCode(block, 'content');
+       console.log(statements_content)
+        // if (statements_content != ""){
+        //   document.getElementById('title').innerText = statements_content;
+        // console.log(document.getElementById('title'))}
+        // else
+        //   console.log(document.getElementById('title'))
+        //   document.getElementById('title').innerText = "untitled web page";
+      
+        var code = '<title>' + statements_content.trim() + '</title>\n';
         return code;
       };
+
       return {
-        type: "html",
+        type: "title",
         kind: "block",
     }
   }
+  plaintext(){ 
+    Blockly.common.defineBlocksWithJsonArray([
+      {
+        "type": "plaintext",
+        "message0": "text %1",
+        "args0": [
+        {
+          "type": "field_input",
+          "name": "content",
+          "text": ""
+        }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": 330,
+        "tooltip": "",
+        "helpUrl": "http://www.w3schools.com/tags/tag_html.asp"
+      },
+   ])
+  Blockly.JavaScript.forBlock['plaintext'] = function(block) {
+    var text_content = block.getFieldValue('content');
+    var code = text_content + '\n';
+    return code;
+  };
+      return {
+        type: "plaintext",
+        kind: "block",
+    }
+  }
+
 }
 
