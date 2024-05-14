@@ -29,7 +29,7 @@ export function template(element) {
          </div>
          <div class="body_bloque_codigo">
             <div class="body_bloque flex_col" id="body_bloque">
-               <div class="ventana_bloques flex_row">
+               <div class="ventana_bloques flex_row" id="ventana_bloque">
                   <div id="wsp-html">Workspace HTML</div>
                   <div id="wsp-css" class="hidden">Workspace CSS</div>
                   <div id="wsp-js" class="hidden">Workspace JS</div>
@@ -37,7 +37,7 @@ export function template(element) {
                <div class="resizer_css hidden" id="r2"></div>
             </div>
             <div class="body_codigo flex_col hidden" id="body_codigo">
-               <div class="ventana_codigo flex_row">
+               <div class="ventana_codigo flex_row" id="ventana_codigo">
                   <div id="codigo-html">codigo HTML</div>
                   <div id="codigo-css" class="hidden">codigo CSS</div>
                   <div id="codigo-js" class="hidden">codigo JS</div>
@@ -49,10 +49,11 @@ export function template(element) {
       
       <div class="navegador flex_row " id="navegador">
          <div class="ventana_navegador" id="ventana_navegador">
-            <h2>Navegador</h2>
-            <button id="btn-consola">consola</button>
+            <iframe id="iframe_navegador">
+            </iframe>
          </div>
-         <div class="ventana_consola hidden">Consola</div>
+         <button id="btn-consola">consola</button>
+         <div class="ventana_consola hidden" id="ventana_consola">Consola</div>
       </div>
    </section>
    

@@ -185,6 +185,7 @@ class Controlador {
             const textareaNode = document.createElement('textarea');          
             const mostrarOup = new MostradorOutput(codigoHtmlNode,textareaNode)
             mostrarOup.agregarTexto(codigoCrudo)
+            document.getElementById('iframe_navegador').src = "data:text/html;charset=utf-8," + encodeURIComponent(codigoCrudo);
             // if (this.panelCodigoGenerado.value != codigoCrudo) {
             //   this.detenerEjecucion();
             //   this.quitarTodosLosResaltados();
@@ -211,7 +212,6 @@ class Controlador {
   }
 
   crearInyectarWorkspace(idElemento, objetoConfig) {
-    console.log(objetoConfig)
     this.workspace = Blockly.inject(idElemento, objetoConfig);
   }
 
