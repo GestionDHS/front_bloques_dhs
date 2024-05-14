@@ -48,10 +48,10 @@ export function template(element) {
       </div>
       
       <div class="navegador flex_row " id="navegador">
-         <div class="ventana_navegador">
+         <iframe class="ventana_navegador" id="ventana_navegador">
             <h2>Navegador</h2>
             <button id="btn-consola">consola</button>
-         </div>
+         </iframe>
          <div class="ventana_consola hidden">Consola</div>
       </div>
    </section>

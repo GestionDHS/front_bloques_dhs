@@ -185,6 +185,7 @@ class Controlador {
             const textareaNode = document.createElement('textarea');          
             const mostrarOup = new MostradorOutput(codigoHtmlNode,textareaNode)
             mostrarOup.agregarTexto(codigoCrudo)
+            document.getElementById('ventana_navegador').src = "data:text/html;charset=utf-8," + encodeURIComponent(codigoCrudo);
             // if (this.panelCodigoGenerado.value != codigoCrudo) {
             //   this.detenerEjecucion();
             //   this.quitarTodosLosResaltados();
@@ -758,8 +759,8 @@ class MostradorOutput {
     this.elementoPadre = elemetoPadre;
     this.blanquearTodo();
     this.elementoPadre && this.elementoPadre.appendChild(this.elemento);
-    this.elemento.style.width = 'auto';
-    this.elemento.style.height = '200px';
+    this.elemento.style.width = '100%';
+    this.elemento.style.height = '100%';
   }
   blanquearTodo() {
     this.elemento.value = "";
