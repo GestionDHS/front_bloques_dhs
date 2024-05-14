@@ -185,7 +185,7 @@ class Controlador {
             const textareaNode = document.createElement('textarea');          
             const mostrarOup = new MostradorOutput(codigoHtmlNode,textareaNode)
             mostrarOup.agregarTexto(codigoCrudo)
-            document.getElementById('ventana_navegador').src = "data:text/html;charset=utf-8," + encodeURIComponent(codigoCrudo);
+            document.getElementById('iframe_navegador').src = "data:text/html;charset=utf-8," + encodeURIComponent(codigoCrudo);
             // if (this.panelCodigoGenerado.value != codigoCrudo) {
             //   this.detenerEjecucion();
             //   this.quitarTodosLosResaltados();
@@ -212,7 +212,6 @@ class Controlador {
   }
 
   crearInyectarWorkspace(idElemento, objetoConfig) {
-    console.log(objetoConfig)
     this.workspace = Blockly.inject(idElemento, objetoConfig);
   }
 
@@ -760,7 +759,7 @@ class MostradorOutput {
     this.blanquearTodo();
     this.elementoPadre && this.elementoPadre.appendChild(this.elemento);
     this.elemento.style.width = '100%';
-    this.elemento.style.height = '100%';
+    this.elemento.style.height = '100vh';
   }
   blanquearTodo() {
     this.elemento.value = "";

@@ -1,10 +1,12 @@
 import '../../style.css'
 import { configurarYRenderizarToolbox } from '../../utils/Funciones.js';
 import ControladorStandard from "../../bloques/Controlador.js";
+import CustomTheme from "../../bloques/CustomTheme.js";
 import { Dhs_Categorias } from '../../clases/Dhs-categorias.js';
 import { template } from "../../utils/Template.js";
 
-document.querySelector('#app').innerHTML = template(``)
+(function () {document.querySelector('#app').innerHTML = template(``)}());
+
 
 // BLOCKLY ------------------------------------------------------
 const estadoWorkspaceInicial = '{"blocks":{"languageVersion":0,"blocks":[{"type":"base_frame","id":"rwW]g?!-iwJNk))r*~^C","x":61,"y":69}]}}';
