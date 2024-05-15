@@ -133,7 +133,6 @@ export const configurarYRenderizarToolbox = function (
   wspARenderizar,
   tipo
 ) {
-  
   categoriaElegida.tipos.forEach((cat) =>
     miControlador.ConfiguradorBloques.crearCategoriaToolbox(cat,tipo)
 );
@@ -155,6 +154,9 @@ if(tipo === "HTML"){
       wheel: true,
       pinch: true,
     },
+    resize: true,
+    parentWidth: null,
+    parentHeight: null
   },tipo);
 }
 if(tipo === "CSS"){
@@ -166,8 +168,19 @@ if(tipo === "CSS"){
       wheel: true,
       pinch: true,
     },
+    resize: true,
+    parentWidth: null,
+    parentHeight: null
   },tipo);
 }
+
+const newWidth = "100%";
+const newHeight = "100%";
+
+Blockly.svgResize(miControlador.workspace, newWidth, newHeight);
+
+
+
   miControlador.setearYCargarBloquesIniciales(
     JSON.parse(bloquesPrecargadosJSON),tipo
   );

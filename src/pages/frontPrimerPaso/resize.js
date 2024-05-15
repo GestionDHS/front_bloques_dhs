@@ -43,6 +43,7 @@ for (let r of arrayDeResizers) {
             cajas.panel_derecho_r1.style.width = (100 - left_width) + '%';
             // cajas.panel_izq_r1.style.flex = "1 1 auto"
             // cajas.panel_derecho_r1.style.flex = "1 1 auto"
+            Blockly.svgResize(miControlador.workspace,left_width)
          } else {
             //r2 mueve los divs body_bloque y body_codigo
             let left_width = (parseFloat(getComputedStyle(cajas.b_bloque_r2, '').width) + e.movementX) * panel_izq_r1_width;
@@ -50,6 +51,8 @@ for (let r of arrayDeResizers) {
             cajas.b_cod_r2.style.width = (100 - left_width) + '%';
             // cajas.b_cod_r2.style.width = `calc(100% - ${left_width}%)`
             // cajas.b_cod_r2.style.flex = "1 1 auto"
+            // console.log(miControlador.workspace.getWidth())
+            Blockly.svgResize(miControlador.workspace,left_width)
          }
       }
    })
@@ -106,6 +109,10 @@ function handelClickVisibilityPanels(e) {
       // ventanas.ventana_bloques.style.width="100%"
       div_body_codigo.style.width = !btnsMayores["btn-bloque"].classList.contains("button_focus") && btnsMayores["btn-codigo"].classList.contains("button_focus") ? "100%" : "50%"
       div_body_bloque.style.width = btnsMayores["btn-bloque"].classList.contains("button_focus") && !btnsMayores["btn-codigo"].classList.contains("button_focus") ? "100%" : "50%"
+      //las 3 lineas siguienetes están repetidas en la parte del resize, hay que sacarlas en una fn aparte
+      let panel_izq_r1_width = 100 / parseFloat(getComputedStyle(cajas.panel_izq_r1, '').width)
+      let left_width = (parseFloat(getComputedStyle(cajas.b_bloque_r2, '').width) + e.movementX) * panel_izq_r1_width;
+      Blockly.svgResize(miControlador.workspace,left_width)
       div_bloque_codigo.classList.remove("hidden")
       div_bloque_codigo.classList.remove("fondo_gris")
       btnsMayores["btn-bloque"].classList.contains("button_focus") && prenderBtnSegunDiv(e.target)
