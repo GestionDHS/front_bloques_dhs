@@ -215,6 +215,7 @@ class Controlador {
     if(tipo==="HTML"){
       this.workspaceHTML = Blockly.inject(idElemento, objetoConfig);
       console.log("Created workspaceHTML:", this.workspaceHTML)
+      console.log("Created workspaceHTML:", this.workspaceHTML)
     }
     if(tipo==="CSS"){
       this.workspaceCSS = Blockly.inject(idElemento, objetoConfig)
