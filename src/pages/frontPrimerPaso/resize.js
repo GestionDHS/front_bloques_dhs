@@ -43,7 +43,7 @@ for (let r of arrayDeResizers) {
             cajas.panel_derecho_r1.style.width = (100 - left_width) + '%';
             // cajas.panel_izq_r1.style.flex = "1 1 auto"
             // cajas.panel_derecho_r1.style.flex = "1 1 auto"
-            miControlador.workspaceHTM && Blockly.svgResize(miControlador.workspaceHTML, left_width)
+            miControlador.workspaceHTML && Blockly.svgResize(miControlador.workspaceHTML, left_width)
             miControlador.workspaceCSS && Blockly.svgResize(miControlador.workspaceCSS, left_width)
             miControlador.workspaceJS && Blockly.svgResize(miControlador.workspaceJS, left_width)
          } else {
@@ -54,7 +54,8 @@ for (let r of arrayDeResizers) {
             // cajas.b_cod_r2.style.width = `calc(100% - ${left_width}%)`
             // cajas.b_cod_r2.style.flex = "1 1 auto"
             // console.log(miControlador.workspace.getWidth())
-            miControlador.workspaceHTM && Blockly.svgResize(miControlador.workspaceHTML, left_width)
+            console.log(miControlador.workspaceHTML)
+            miControlador.workspaceHTML && Blockly.svgResize(miControlador.workspaceHTML, left_width)
             miControlador.workspaceCSS && Blockly.svgResize(miControlador.workspaceCSS, left_width)
             miControlador.workspaceJS && Blockly.svgResize(miControlador.workspaceJS, left_width)
          }
@@ -116,7 +117,7 @@ function handelClickVisibilityPanels(e) {
       //las 3 lineas siguienetes están repetidas en la parte del resize, hay que sacarlas en una fn aparte
       let panel_izq_r1_width = 100 / parseFloat(getComputedStyle(cajas.panel_izq_r1, '').width)
       let left_width = (parseFloat(getComputedStyle(cajas.b_bloque_r2, '').width) + e.movementX) * panel_izq_r1_width;
-      miControlador.workspaceHTM && Blockly.svgResize(miControlador.workspaceHTML, left_width)
+      miControlador.workspaceHTML && Blockly.svgResize(miControlador.workspaceHTML, left_width)
       miControlador.workspaceCSS && Blockly.svgResize(miControlador.workspaceCSS, left_width)
       miControlador.workspaceJS && Blockly.svgResize(miControlador.workspaceJS, left_width)
       div_bloque_codigo.classList.remove("hidden")
