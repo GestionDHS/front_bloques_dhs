@@ -130,36 +130,50 @@ export const configurarYRenderizarToolbox = function (
   categoriaElegida,
   ordenJerarquicoBloques,
   bloquesPrecargadosJSON,
-  funcionesAExporner
+  wspARenderizar,
+  tipo
 ) {
-  console.log(categoriaElegida)
+  
   categoriaElegida.tipos.forEach((cat) =>
-    miControlador.ConfiguradorBloques.crearCategoriaToolbox(cat)
+    miControlador.ConfiguradorBloques.crearCategoriaToolbox(cat,tipo)
 );
 
 ordenJerarquicoBloques.forEach((bl) => {
-  miControlador.ConfiguradorBloques.configurarUnBloqueCustomStandard(...bl);
+  miControlador.ConfiguradorBloques.configurarUnBloqueCustomStandard(...bl,tipo);
 });
 //El id que pasemos va depender de si es HTML,CSS o JS
-const divWspHTML = document.getElementById("wsp-html")
+const divWspHTML = document.getElementById(wspARenderizar)
 divWspHTML.innerHTML=""
 divWspHTML.style.width= "100%"
-miControlador.crearInyectarWorkspace("wsp-html", {
-  toolbox: miControlador.ConfiguradorBloques.toolbox,
-  theme: "themeDH",
-  renderer: "thrasos",
-  zoom: {
-    controls: true,
-    wheel: true,
-    pinch: true,
-  },
-});
+
+if(tipo === "HTML"){
+  miControlador.crearInyectarWorkspace(wspARenderizar, {
+    toolbox: miControlador.ConfiguradorBloques.toolboxHTML,
+    renderer: "thrasos",
+    zoom: {
+      controls: true,
+      wheel: true,
+      pinch: true,
+    },
+  },tipo);
+}
+if(tipo === "CSS"){
+  miControlador.crearInyectarWorkspace(wspARenderizar, {
+    toolbox: miControlador.ConfiguradorBloques.toolboxCSS,
+    renderer: "thrasos",
+    zoom: {
+      controls: true,
+      wheel: true,
+      pinch: true,
+    },
+  },tipo);
+}
   miControlador.setearYCargarBloquesIniciales(
-    JSON.parse(bloquesPrecargadosJSON)
+    JSON.parse(bloquesPrecargadosJSON),tipo
   );
-  miControlador.setearEventoCambioWorkspaceStandard();
-  miControlador.habilitarDesactivarHuerfanos();
-  miControlador.crearFuncionesGlobalesStandard();
+  // miControlador.setearEventoCambioWorkspaceStandard(tipo);
+  // miControlador.habilitarDesactivarHuerfanos();
+  // miControlador.crearFuncionesGlobalesStandard();
   // funcionesAExporner.forEach((unaFuncion) =>
   //   miControlador.juego.agregarGlobalConCallback(unaFuncion)
   // );

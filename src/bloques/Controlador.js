@@ -211,8 +211,18 @@ class Controlador {
 
   }
 
-  crearInyectarWorkspace(idElemento, objetoConfig) {
-    this.workspace = Blockly.inject(idElemento, objetoConfig);
+  crearInyectarWorkspace(idElemento, objetoConfig,tipo) {
+    if(tipo==="HTML"){
+      this.workspaceHTML = Blockly.inject(idElemento, objetoConfig);
+      console.log("Created workspaceHTML:", this.workspaceHTML)
+    }
+    if(tipo==="CSS"){
+      this.workspaceCSS = Blockly.inject(idElemento, objetoConfig)
+      console.log("Created workspaceCSS:", this.workspaceCSS);
+    }
+    if(tipo==="JS"){
+      this.workspaceCSS = Blockly.inject(idElemento, objetoConfig);
+    }
   }
 
   habilitarEdicionWorkspace() {
@@ -231,16 +241,45 @@ class Controlador {
       return Blockly.serialization.workspaces.save(this.workspace);
     }
   }
-  cargarBloquesSerializados(bloquesSerializados) {
-    return Blockly.serialization.workspaces.load(
-      bloquesSerializados,
-      this.workspace
-    );
+  cargarBloquesSerializados(bloquesSerializados,tipo) {
+    if(tipo==="HTML"){
+      return Blockly.serialization.workspaces.load(
+        bloquesSerializados,
+        this.workspaceHTML)
+    }
+    if(tipo==="CSS"){
+      return Blockly.serialization.workspaces.load(
+        bloquesSerializados,
+        this.workspaceCSS)
+    }
+    if(tipo==="JS"){
+      return Blockly.serialization.workspaces.load(
+        bloquesSerializados,
+        this.workspaceJS)
+    }
+   
     // --load hace el clear previo--
   }
-  setearYCargarBloquesIniciales(bloquesSerealizados) {
-    this.bloquesIniciales = bloquesSerealizados;
-    this.cargarBloquesSerializados(this.bloquesIniciales);
+  setearYCargarBloquesIniciales(bloquesSerealizados,tipo) {
+    console.log(bloquesSerealizados)
+    console.log(tipo)
+    if(tipo==="HTML"){
+      console.log("workspaceHTML before loading:", this.workspaceHTML);
+      this.bloquesInicialesHTML = bloquesSerealizados;
+      this.cargarBloquesSerializados(this.bloquesInicialesHTML,tipo);
+    }
+
+    if(tipo==="CSS"){
+      console.log("workspaceCss before loading:", this.workspaceCSS);
+      this.bloquesInicialesCSS = bloquesSerealizados;
+      this.cargarBloquesSerializados(this.bloquesInicialesCSS,tipo);}
+
+    if(tipo==="JS"){
+      this.bloquesInicialesJS = bloquesSerealizados;
+      this.cargarBloquesSerializados(this.bloquesInicialesJS,tipo);
+    }
+    
+  
   }
   verificarUsoDeBloques(bloqueAVerificar) {//devulve array de bloques encontrados
     const existeBloque = this.obtenerBloquesSerializados().blocks.blocks.filter(b => b.type == bloqueAVerificar)

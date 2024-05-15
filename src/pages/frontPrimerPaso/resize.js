@@ -17,8 +17,8 @@ const ventanas = (function () {
    ventanas['iframe_navegador'] = document.getElementById('iframe_navegador');
    return ventanas;
 }());
-ventanas["iframe_navegador"].style.width = "100%"
-ventanas["iframe_navegador"].style.height = "100%"
+// ventanas["iframe_navegador"].style.width = "100%"
+// ventanas["iframe_navegador"].style.height = "100%"
 
 //Resizers
 let r1 = document.querySelector("#r1")

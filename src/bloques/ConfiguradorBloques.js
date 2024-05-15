@@ -2,39 +2,104 @@
 import { DHS_Gallery } from '../clases/Dhs-galeria';
 export default class ConfiguradorBloques {
     constructor() {
-        this.toolbox = {
+        this.toolboxHTML = {
             kind: "categoryToolbox",
             contents: []
         }
+        this.toolboxCSS= {
+          kind: "categoryToolbox",
+          contents: []
+      }
+      this.toolboxJS = {
+        kind: "categoryToolbox",
+        contents: []
+    }
+
         this.galeria = new DHS_Gallery
-        this.HtmlGenerator = new Blockly.Generator('HTML');
     }
 
-    crearCategoriaToolbox(datosCategoria) {
-        console.log("crearCategoriaToolbox")
-        this.toolbox.contents.push({
-            kind: "category",
-            name: datosCategoria.name,
-            categorystyle: datosCategoria.categorystyle,
-            contents: [],
-        })
+    crearCategoriaToolbox(datosCategoria,tipo) {
+      if(tipo==="HTML"){
+        this.toolboxHTML.contents.push({
+          kind: "category",
+          name: datosCategoria.name,
+          categorystyle: datosCategoria.categorystyle,
+          contents: [],
+      })
+      }
+  
+      if(tipo==="CSS"){
+        this.toolboxCSS.contents.push({
+          kind: "category",
+          name: datosCategoria.name,
+          categorystyle: datosCategoria.categorystyle,
+          contents: [],
+      })}
+  
+      if(tipo==="JS"){
+        this.toolboxJS.contents.push({
+          kind: "category",
+          name: datosCategoria.name,
+          categorystyle: datosCategoria.categorystyle,
+          contents: [],
+      })
+      }
+       
     }
 
-    configurarUnBloqueCustomStandard(keywordBloque, nombreCategoria = "Acciones") {
+    configurarUnBloqueCustomStandard(keywordBloque, nombreCategoria = "Acciones",tipo) {
+      if(tipo==="HTML"){
         if (!this[keywordBloque]) {
-            throw new Error("No tenemos un método para configurar bloques que coincida con la keyowrd " + keywordBloque);
-        }
-        let categoriaBuscada = this.toolbox.contents.find(obj => obj.kind == "category" && obj.name == nombreCategoria);
-        if (!categoriaBuscada) {
-            throw new Error("No existe la categoría " + nombreCategoria + " en la toolbox");
-        } else {
-            let generacionBloque = this[keywordBloque]();
-            if (Array.isArray(generacionBloque)) {
-                categoriaBuscada.contents.push(...generacionBloque);
-            } else {
-                categoriaBuscada.contents.push(generacionBloque)
-            }
-        }
+          throw new Error("No tenemos un método para configurar bloques que coincida con la keyowrd " + keywordBloque);
+      }
+      let categoriaBuscada = this.toolboxHTML.contents.find(obj => obj.kind == "category" && obj.name == nombreCategoria);
+      if (!categoriaBuscada) {
+          throw new Error("No existe la categoría " + nombreCategoria + " en la toolbox");
+      } else {
+          let generacionBloque = this[keywordBloque]();
+          if (Array.isArray(generacionBloque)) {
+              categoriaBuscada.contents.push(...generacionBloque);
+          } else {
+              categoriaBuscada.contents.push(generacionBloque)
+          }
+      }
+      console.log(this.toolboxHTML.contents)
+      }
+  
+      if(tipo==="CSS"){
+        if (!this[keywordBloque]) {
+          throw new Error("No tenemos un método para configurar bloques que coincida con la keyowrd " + keywordBloque);
+      }
+      let categoriaBuscada = this.toolboxCSS.contents.find(obj => obj.kind == "category" && obj.name == nombreCategoria);
+      if (!categoriaBuscada) {
+          throw new Error("No existe la categoría " + nombreCategoria + " en la toolbox");
+      } else {
+          let generacionBloque = this[keywordBloque]();
+          if (Array.isArray(generacionBloque)) {
+              categoriaBuscada.contents.push(...generacionBloque);
+          } else {
+              categoriaBuscada.contents.push(generacionBloque)
+          }
+      }
+      console.log(this.toolboxCSS.contents)}
+  
+      if(tipo==="JS"){
+        if (!this[keywordBloque]) {
+          throw new Error("No tenemos un método para configurar bloques que coincida con la keyowrd " + keywordBloque);
+      }
+      let categoriaBuscada = this.toolboxJS.contents.find(obj => obj.kind == "category" && obj.name == nombreCategoria);
+      if (!categoriaBuscada) {
+          throw new Error("No existe la categoría " + nombreCategoria + " en la toolbox");
+      } else {
+          let generacionBloque = this[keywordBloque]();
+          if (Array.isArray(generacionBloque)) {
+              categoriaBuscada.contents.push(...generacionBloque);
+          } else {
+              categoriaBuscada.contents.push(generacionBloque)
+          }
+      }
+      }
+   
     }
 
     mostrarKeywords() {
