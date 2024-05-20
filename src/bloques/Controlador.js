@@ -273,7 +273,7 @@ class Controlador {
   }
   setearYCargarBloquesIniciales(bloquesSerealizados,tipo) {
     if(tipo==="HTML"){
-      console.log("workspaceHTML before loading:", this.workspaceHTML);
+      //console.log("workspaceHTML before loading:", this.workspaceHTML);
       this.bloquesInicialesHTML = bloquesSerealizados;
       this.cargarBloquesSerializados(this.bloquesInicialesHTML,tipo);
     }

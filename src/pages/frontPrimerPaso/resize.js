@@ -119,6 +119,7 @@ function handelClickVisibilityPanels(e) {
       miControlador.workspaceHTML && Blockly.svgResize(miControlador.workspaceHTML, left_width)
       miControlador.workspaceCSS && Blockly.svgResize(miControlador.workspaceCSS, left_width)
       miControlador.workspaceJS && Blockly.svgResize(miControlador.workspaceJS, left_width)
+      console.log("render btn grandes")
       div_bloque_codigo.classList.remove("hidden")
       div_bloque_codigo.classList.remove("fondo_gris")
       btnsMayores["btn-bloque"].classList.contains("button_focus") && prenderBtnSegunDiv(e.target)
@@ -148,7 +149,15 @@ function handelClickVisibilityWorkSpaces(e) {
       btn.classList.remove("button_focus")
    })
    e.target.classList.add("button_focus")
-
+   if(btnsMenores["btn-html"].classList.contains("button_focus")){
+      console.log("prendido el btn-html")
+      // let panel_izq_width = 100 / parseFloat(getComputedStyle(cajas.panel_izq_r2, '').width)
+      // let left_width = (parseFloat(getComputedStyle(cajas.b_bloque_r2, '').width) + e.movementX) * panel_izq_width;
+      // miControlador.workspaceHTML && Blockly.svgResize(miControlador.workspaceHTML, left_width)
+   }
+   if(btnsMenores["btn-css"].classList.contains("button_focus")){
+      console.log("prendido el btn-css")
+   }
    //oculto todos los wsp y todos los div de codigo
    const lista_id_wp = ["#wsp-html", "#wsp-css", "#wsp-js", "#codigo-html", "#codigo-css", "#codigo-js"]
    lista_id_wp.forEach(elemento => {
