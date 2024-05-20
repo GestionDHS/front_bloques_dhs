@@ -20,7 +20,8 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        main: resolve(root, "index.html"),
+        main: resolve(root, "./index.html"),
+        //main: resolve(__dirname, './index.html'),
         primerPaso:(root, "pages", "frontPrimerPaso", "index.html"),
         act1: resolve(root, "pages", "actividad001", "act.html"),
       }
