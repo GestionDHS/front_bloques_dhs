@@ -13,7 +13,7 @@ export default defineConfig({
   // plugins: [
   //   registerProcedureSerializer(),
   // ],
-  base: "/",
+  base: "/front_bloques_dhs/",
   root,
   build: {
     outDir,
