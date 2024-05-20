@@ -30,6 +30,8 @@ class Controlador {
     this.panelCodigoGenerado = panelCodigoGenerado;
     this.desactivaHuerfanos = false;
     // this.estadoWorkspaceActual = null;
+
+    this.workspace={}
     // BOTONES
     this.botonEjecutar = botonEjecutar;
     this.hayBubble = false
@@ -105,7 +107,8 @@ class Controlador {
             if (result.isConfirmed) {
               this.detenerEjecucion();
               this.limpiarWorkspace();
-              this.cargarBloquesSerializados(JSON.parse(this.estadoWorkspaceInicial));
+              this.tipo = "HTML"
+              this.cargarBloquesSerializados(JSON.parse(this.estadoWorkspaceInicial),tipo);
               let timerInterval;
               this.setearEstadoInicialWorkspace()
               swalWithBootstrapButtons.fire({
@@ -179,9 +182,9 @@ class Controlador {
           return;
         } else {
           if (!this.debeDetenerEjecucion) {
-            codigoCrudo = this.generarCodigoCrudo();
+            codigoCrudo = this.generarCodigoCrudo("HTML");
             const codigoHtmlNode = document.getElementById("codigo-html")
-            // console.log(codigoCrudo)
+            console.log(codigoCrudo)
             const textareaNode = document.createElement('textarea');          
             const mostrarOup = new MostradorOutput(codigoHtmlNode,textareaNode)
             mostrarOup.agregarTexto(codigoCrudo)
@@ -214,54 +217,64 @@ class Controlador {
   crearInyectarWorkspace(idElemento, objetoConfig,tipo) {
     if(tipo==="HTML"){
       this.workspaceHTML = Blockly.inject(idElemento, objetoConfig);
-      console.log("Created workspaceHTML:", this.workspaceHTML)
+      this.workspace.html = this.workspaceHTML
+      
+      // console.log("Created workspaceHTML:"+this.workspaceHTML)
     }
     if(tipo==="CSS"){
       this.workspaceCSS = Blockly.inject(idElemento, objetoConfig)
-      console.log("Created workspaceCSS:", this.workspaceCSS);
+      this.workspace.css = this.workspaceCSS
+      // console.log("Created workspaceCSS:"+ this.workspaceCSS);
     }
     if(tipo==="JS"){
-      this.workspaceCSS = Blockly.inject(idElemento, objetoConfig);
+      this.workspaceJS = Blockly.inject(idElemento, objetoConfig);
+      this.workspace.js = this.workspaceJS
     }
   }
 
-  habilitarEdicionWorkspace() {
-    this.workspace.options.readOnly = false;
+  habilitarEdicionWorkspace(tipo ="html") {
+    this.workspace[tipo].options.readOnly = false;
   }
 
-  deshabilitarEdicionWorkspace() {
-    this.workspace.options.readOnly = true;
+  deshabilitarEdicionWorkspace(tipo) {
+    this.workspace[tipo].options.readOnly = true;
   }
 
-  limpiarWorkspace() {
-    return this.workspace.clear();
+  limpiarWorkspace(tipo) {
+    return this.workspace[tipo].clear();
   }
-  obtenerBloquesSerializados(todoElWorskpace = true) {
+  obtenerBloquesSerializados(todoElWorskpace = true,tipo) {
     if (todoElWorskpace) {
-      return Blockly.serialization.workspaces.save(this.workspace);
+      return Blockly.serialization.workspaces.save(this.workspace[tipo]);
     }
   }
   cargarBloquesSerializados(bloquesSerializados,tipo) {
-    if(tipo==="HTML"){
+    console.log("aca")
+    console.log(bloquesSerializados)
+    console.log(this.workspace[tipo.toLowerCase()])
       return Blockly.serialization.workspaces.load(
         bloquesSerializados,
-        this.workspaceHTML)
-    }
-    if(tipo==="CSS"){
-      return Blockly.serialization.workspaces.load(
-        bloquesSerializados,
-        this.workspaceCSS)
-    }
-    if(tipo==="JS"){
-      return Blockly.serialization.workspaces.load(
-        bloquesSerializados,
-        this.workspaceJS)
-    }
+        this.workspace[tipo.toLowerCase()])
+    
+    // if(tipo==="HTML"){
+    //   return Blockly.serialization.workspaces.load(
+    //     bloquesSerializados,
+    //     this.workspaceHTML)
+    // }
+    // if(tipo==="CSS"){
+    //   return Blockly.serialization.workspaces.load(
+    //     bloquesSerializados,
+    //     this.workspaceCSS)
+    // }
+    // if(tipo==="JS"){
+    //   return Blockly.serialization.workspaces.load(
+    //     bloquesSerializados,
+    //     this.workspaceJS)
+    // }
    
     // --load hace el clear previo--
   }
   setearYCargarBloquesIniciales(bloquesSerealizados,tipo) {
-    console.log(bloquesSerealizados)
     console.log(tipo)
     if(tipo==="HTML"){
       console.log("workspaceHTML before loading:", this.workspaceHTML);
@@ -270,7 +283,7 @@ class Controlador {
     }
 
     if(tipo==="CSS"){
-      console.log("workspaceCss before loading:", this.workspaceCSS);
+      // console.log("workspaceCss before loading:", this.workspaceCSS);
       this.bloquesInicialesCSS = bloquesSerealizados;
       this.cargarBloquesSerializados(this.bloquesInicialesCSS,tipo);}
 
@@ -281,51 +294,52 @@ class Controlador {
     
   
   }
-  verificarUsoDeBloques(bloqueAVerificar) {//devulve array de bloques encontrados
-    const existeBloque = this.obtenerBloquesSerializados().blocks.blocks.filter(b => b.type == bloqueAVerificar)
-    return existeBloque
-  }
-  verificarUsoDeBloquesInternos(bloqueABuscar) {// devuelve cantidad de bloques encontrados en todo el WS
-    let cantidadDeBloquesEnW = this.workspace.getBlocksByType(bloqueABuscar, "LTR")
-    let cantBloquesHijosDelOnExecute = cantidadDeBloquesEnW.filter(b => this.verificarEsHuerfano(b))
-    return cantBloquesHijosDelOnExecute.length
-  }
-  obtenerbloque(bloqueABuscar) {
-    let arrBloques = this.workspace.getBlocksByType(bloqueABuscar, "LTR")
-    return arrBloques
-  }
+  // verificarUsoDeBloques(bloqueAVerificar) {//devulve array de bloques encontrados
+  //   const existeBloque = this.obtenerBloquesSerializados().blocks.blocks.filter(b => b.type == bloqueAVerificar)
+  //   return existeBloque
+  // }
+  // verificarUsoDeBloquesInternos(bloqueABuscar) {// devuelve cantidad de bloques encontrados en todo el WS
+  //   let cantidadDeBloquesEnW = this.workspace.getBlocksByType(bloqueABuscar, "LTR")
+  //   let cantBloquesHijosDelOnExecute = cantidadDeBloquesEnW.filter(b => this.verificarEsHuerfano(b))
+  //   return cantBloquesHijosDelOnExecute.length
+  // }
+  // obtenerbloque(bloqueABuscar) {
+  //   let arrBloques = this.workspace.getBlocksByType(bloqueABuscar, "LTR")
+  //   return arrBloques
+  // }
 
-  verificarEsHuerfano(block) {
-    let blockOnExecute = this.workspace.getBlocksByType("on_execute")
-    let bloquesDescendDelOnExecute = blockOnExecute[0]?.getDescendants()
-    let esHijo = bloquesDescendDelOnExecute?.find(b => b.id == block.id)
-    return esHijo
-  }
+  // verificarEsHuerfano(block) {
+  //   let blockOnExecute = this.workspace.getBlocksByType("on_execute")
+  //   let bloquesDescendDelOnExecute = blockOnExecute[0]?.getDescendants()
+  //   let esHijo = bloquesDescendDelOnExecute?.find(b => b.id == block.id)
+  //   return esHijo
+  // }
 
   //WORKSPACE - BLOQUES - RESALTADO
 
-  resaltarBloque(id, conservarOtros = true) {
-    this.workspace.highlightBlock(id, conservarOtros);
-    this.hacerPausaResaltar = true;
-  }
+  // resaltarBloque(id, conservarOtros = true) {
+  //   this.workspace.highlightBlock(id, conservarOtros);
+  //   this.hacerPausaResaltar = true;
+  // }
 
-  quitarTodosLosResaltados() {
-    this.workspace.highlightBlock(null);
-  }
+  // quitarTodosLosResaltados() {
+  //   this.workspace.highlightBlock(null);
+  // }
 
-  quitarResaltadoBloque(bloque) {
-    return bloque.setHighlighted(false);
-  }
+  // quitarResaltadoBloque(bloque) {
+  //   return bloque.setHighlighted(false);
+  // }
 
   // WORKSPACE - GENERACION DE CODIGO Y AFIJACION
 
-  generarCodigoCrudo(todoElWorskpace = true) {
+  generarCodigoCrudo(todoElWorskpace = true,tipo) {
     this.setearPrefijoBloques(null);
     this.setearSufijoBloques(null);
     let codigoCrudo;
 
     if (todoElWorskpace) {
-      codigoCrudo = Blockly.JavaScript.workspaceToCode(this.workspace);
+      //codigoCrudo = tipo === "HTML" ? Blockly.JavaScript.workspaceToCode(this.workspace[tipo]): Blockly.JavaScript.workspaceToCode(this.workspaceCSS);
+      codigoCrudo = Blockly.JavaScript.workspaceToCode(this.workspace[tipo])
       //this.generarHTML()
     }
     this.setearPrefijoBloques(this.prefijo);
@@ -334,13 +348,13 @@ class Controlador {
   }
   generarHTML(event) {
     this.HtmlGenerator = new Blockly.Generator('HTML');
-    var code = this.HtmlGenerator.workspaceToCode(this.workspace);
+    var code = this.HtmlGenerator.workspaceToCode(this.workspaceHTML);
     document.getElementById('codigo-html').innerText = code;
     document.getElementById('navegador').src = "data:text/html;charset=utf-8," + encodeURIComponent(code);
   }
   mostrarCodigoCrudo() {
     if (this.panelCodigoGenerado) {
-      this.panelCodigoGenerado.value = this.generarCodigoCrudo();
+      this.panelCodigoGenerado.value = this.generarCodigoCrudo("HTML");
     }
   }
 
@@ -358,8 +372,8 @@ class Controlador {
     this.objetoEventoPlayground.sendState(state);
   }
 
-  obtenerEstadoActual() {
-    const state = JSON.stringify(Blockly.serialization.workspaces.save(this.workspace))
+  obtenerEstadoActual(tipo) {
+    const state = JSON.stringify(Blockly.serialization.workspaces.save(this.workspace[tipo]))
     this.estadoWorkspaceActual(state)
   }
 
@@ -368,10 +382,10 @@ class Controlador {
     this.estadoWorkspaceActual(state)
   }
 
-  generarCodigoPrefijado(prefijo = this.prefijo, sufijo = this.sufijo) {
+  generarCodigoPrefijado(prefijo = this.prefijo, sufijo = this.sufijo,tipo) {
     this.setearPrefijoBloques(prefijo);
     this.setearSufijoBloques(sufijo);
-    return Blockly.JavaScript.workspaceToCode(this.workspace);
+    return Blockly.JavaScript.workspaceToCode(this.workspace[tipo]);
   }
 
   // METODOS EJECUCION/ITERACION/INTERPRETE
@@ -408,23 +422,23 @@ class Controlador {
   }
 
   generarCorrerCodigoCrudoSincronamente(callback = this.callbackInterprete) {
-    this.correrCodigoSincrono(this.generarCodigoCrudo(), callback);
+    this.correrCodigoSincrono(this.generarCodigoCrudo("HTML"), callback);
   }
 
-  quitarResaltadoBloqueLuegoAvanzar(id) {
-    this.hacerPausaResaltar = false;
-    this.hacerPausaQuitarResaltado = true;
-    let miBloque = this.workspace.getBlockById(id);
-    let valor = miBloque?.getFieldValue("CASILLAS");
-    let duracionDeLaPausa = 1;
-    duracionDeLaPausa = valor ? valor * this.velocidad : this.velocidad;
-    // IR AL PRÓXIMO
-    setTimeout(() => {
-      this.quitarResaltadoBloque(miBloque);
-      this.hacerPausaQuitarResaltado = false;
-      this.hacerPasosHastaBandera();
-    }, duracionDeLaPausa);
-  }
+  // quitarResaltadoBloqueLuegoAvanzar(id) {
+  //   this.hacerPausaResaltar = false;
+  //   this.hacerPausaQuitarResaltado = true;
+  //   let miBloque = this.workspace.getBlockById(id);
+  //   let valor = miBloque?.getFieldValue("CASILLAS");
+  //   let duracionDeLaPausa = 1;
+  //   duracionDeLaPausa = valor ? valor * this.velocidad : this.velocidad;
+  //   // IR AL PRÓXIMO
+  //   setTimeout(() => {
+  //     this.quitarResaltadoBloque(miBloque);
+  //     this.hacerPausaQuitarResaltado = false;
+  //     this.hacerPasosHastaBandera();
+  //   }, duracionDeLaPausa);
+  // }
 
   verificarQueHayaUnSoloOnExecute() {
     if (this.verificarUsoDeBloques("on_execute").length !== 1) {
@@ -579,7 +593,7 @@ class Controlador {
     this.quitarTodosLosResaltados();
     this.cuadroOutput?.blanquearTodo();
     this.cuadroOutput?.marcarInicio();
-    let codigoActualCrudo = this.generarCodigoCrudo();
+    let codigoActualCrudo = this.generarCodigoCrudo("HTML");
     if (this.panelCodigoGenerado) {
       this.panelCodigoGenerado.value = codigoActualCrudo;
     }
@@ -649,9 +663,9 @@ class Controlador {
 
   // WORKSPACE - GESTION EVENTOS DE CAMBIO
 
-  removerEventoCambioWorkspace(eventId) {
+  removerEventoCambioWorkspace(eventId,tipo) {
     this.eventoCambioWorkspaceActual
-      ? this.workspace.removeChangeListener(eventId)
+      ? this.workspace[tipo].removeChangeListener(eventId)
       : null;
   }
 
@@ -659,35 +673,35 @@ class Controlador {
     this.removerEventoCambioWorkspace(this.eventoCambioWorkspaceActual);
   }
 
-  setearEventoCambioWorkspace(callback) {
+  setearEventoCambioWorkspace(callback,tipo) {
     this.eventoCambioWorkspaceActual
-      ? this.workspace.removeChangeListener(this.eventoCambioWorkspaceActual)
+      ? this.workspace[tipo.toLowerCase()].removeChangeListener(this.eventoCambioWorkspaceActual)
       : null;
     this.eventoCambioWorkspaceActual =
-      this.workspace.addChangeListener(callback);
+    this.workspace[tipo.toLowerCase()].addChangeListener(callback);
   }
 
-  setearEventoCambioWorkspaceStandard() {
-    this.setearEventoCambioWorkspace(this.callbackCambioWorkspaceStandard);
+  setearEventoCambioWorkspaceStandard(tipo) {
+    this.setearEventoCambioWorkspace(this.callbackCambioWorkspaceStandard, tipo);
   }
 
-  habilitarDesactivarHuerfanos() {
-    this.desactivaHuerfanos = true;
-    this.eventoHuerfanos = this.workspace.addChangeListener(
-      Blockly.Events.disableOrphans
-    );
-  }
+  // habilitarDesactivarHuerfanos() {
+  //   this.desactivaHuerfanos = true;
+  //   this.eventoHuerfanos = this.workspaceHTML.addChangeListener(
+  //     Blockly.Events.disableOrphans
+  //   );
+  // }
 
-  inhabilitarDesactivarHuerfanos() {
-    this.desactivaHuerfanos = false;
-    this.workspace.removeChangeListener(this.eventoHuerfanos);
-  }
-  habilitarEdicionWorkspace() {
-    this.workspace.options.readOnly = false;
-  }
-  deshabilitarEdicionWorkspace() {
-    this.workspace.options.readOnly = true;
-  }
+  // inhabilitarDesactivarHuerfanos() {
+  //   this.desactivaHuerfanos = false;
+  //   this.workspace.removeChangeListener(this.eventoHuerfanos);
+  // }
+  // habilitarEdicionWorkspace() {
+  //   this.workspace.options.readOnly = false;
+  // }
+  // deshabilitarEdicionWorkspace() {
+  //   this.workspace.options.readOnly = true;
+  // }
   // INTERPRETE
 
   setearCallbackInterprete(callback) {

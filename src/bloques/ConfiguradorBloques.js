@@ -63,7 +63,7 @@ export default class ConfiguradorBloques {
               categoriaBuscada.contents.push(generacionBloque)
           }
       }
-      console.log(this.toolboxHTML.contents)
+      // console.log(this.toolboxHTML.contents)
       }
   
       if(tipo==="CSS"){
@@ -81,7 +81,8 @@ export default class ConfiguradorBloques {
               categoriaBuscada.contents.push(generacionBloque)
           }
       }
-      console.log(this.toolboxCSS.contents)}
+      // console.log(this.toolboxCSS.contents)
+    }
   
       if(tipo==="JS"){
         if (!this[keywordBloque]) {

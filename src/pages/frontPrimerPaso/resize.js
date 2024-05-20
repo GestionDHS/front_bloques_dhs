@@ -54,7 +54,6 @@ for (let r of arrayDeResizers) {
             // cajas.b_cod_r2.style.width = `calc(100% - ${left_width}%)`
             // cajas.b_cod_r2.style.flex = "1 1 auto"
             // console.log(miControlador.workspace.getWidth())
-            console.log(miControlador.workspaceHTML)
             miControlador.workspaceHTML && Blockly.svgResize(miControlador.workspaceHTML, left_width)
             miControlador.workspaceCSS && Blockly.svgResize(miControlador.workspaceCSS, left_width)
             miControlador.workspaceJS && Blockly.svgResize(miControlador.workspaceJS, left_width)

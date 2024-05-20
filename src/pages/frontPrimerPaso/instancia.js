@@ -8,9 +8,9 @@ import { template } from "../../utils/Template.js";
 
 (function () {document.querySelector('#app').innerHTML = template(``)}());
 
-
+//Ejercicios
 // BLOCKLY ------------------------------------------------------
-const estadoWorkspaceInicial = '{}';
+const estadoWorkspaceInicial = "{}";
 const estadoWorkspaceInicialCSS="{}"
 window.miControlador = new ControladorStandard(estadoWorkspaceInicial);
 const categoriaHTML = new Dhs_Categorias()
@@ -41,3 +41,4 @@ configurarYRenderizarToolbox(
    "wsp-css",
    "CSS"
  );
+ 

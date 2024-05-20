@@ -185,7 +185,7 @@ miControlador.workspaceCSS && Blockly.svgResize(miControlador.workspaceCSS, newW
   miControlador.setearYCargarBloquesIniciales(
     JSON.parse(bloquesPrecargadosJSON),tipo
   );
-  // miControlador.setearEventoCambioWorkspaceStandard(tipo);
+  miControlador.setearEventoCambioWorkspaceStandard(tipo);
   // miControlador.habilitarDesactivarHuerfanos();
   // miControlador.crearFuncionesGlobalesStandard();
   // funcionesAExporner.forEach((unaFuncion) =>
