@@ -177,14 +177,15 @@ if(tipo === "CSS"){
 const newWidth = "100%";
 const newHeight = "100%";
 
-Blockly.svgResize(miControlador.workspace, newWidth, newHeight);
+miControlador.workspaceHTML && Blockly.svgResize(miControlador.workspaceHTML, newWidth, newHeight);
+miControlador.workspaceCSS && Blockly.svgResize(miControlador.workspaceCSS, newWidth, newHeight);
 
 
 
   miControlador.setearYCargarBloquesIniciales(
     JSON.parse(bloquesPrecargadosJSON),tipo
   );
-  // miControlador.setearEventoCambioWorkspaceStandard(tipo);
+  miControlador.setearEventoCambioWorkspaceStandard(tipo);
   // miControlador.habilitarDesactivarHuerfanos();
   // miControlador.crearFuncionesGlobalesStandard();
   // funcionesAExporner.forEach((unaFuncion) =>

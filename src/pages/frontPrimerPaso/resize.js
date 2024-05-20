@@ -43,7 +43,9 @@ for (let r of arrayDeResizers) {
             cajas.panel_derecho_r1.style.width = (100 - left_width) + '%';
             // cajas.panel_izq_r1.style.flex = "1 1 auto"
             // cajas.panel_derecho_r1.style.flex = "1 1 auto"
-            Blockly.svgResize(miControlador.workspace,left_width)
+            miControlador.workspaceHTML && Blockly.svgResize(miControlador.workspaceHTML, left_width)
+            miControlador.workspaceCSS && Blockly.svgResize(miControlador.workspaceCSS, left_width)
+            miControlador.workspaceJS && Blockly.svgResize(miControlador.workspaceJS, left_width)
          } else {
             //r2 mueve los divs body_bloque y body_codigo
             let left_width = (parseFloat(getComputedStyle(cajas.b_bloque_r2, '').width) + e.movementX) * panel_izq_r1_width;
@@ -52,7 +54,9 @@ for (let r of arrayDeResizers) {
             // cajas.b_cod_r2.style.width = `calc(100% - ${left_width}%)`
             // cajas.b_cod_r2.style.flex = "1 1 auto"
             // console.log(miControlador.workspace.getWidth())
-            Blockly.svgResize(miControlador.workspace,left_width)
+            miControlador.workspaceHTML && Blockly.svgResize(miControlador.workspaceHTML, left_width)
+            miControlador.workspaceCSS && Blockly.svgResize(miControlador.workspaceCSS, left_width)
+            miControlador.workspaceJS && Blockly.svgResize(miControlador.workspaceJS, left_width)
          }
       }
    })
@@ -112,7 +116,10 @@ function handelClickVisibilityPanels(e) {
       //las 3 lineas siguienetes están repetidas en la parte del resize, hay que sacarlas en una fn aparte
       let panel_izq_r1_width = 100 / parseFloat(getComputedStyle(cajas.panel_izq_r1, '').width)
       let left_width = (parseFloat(getComputedStyle(cajas.b_bloque_r2, '').width) + e.movementX) * panel_izq_r1_width;
-      Blockly.svgResize(miControlador.workspace,left_width)
+      miControlador.workspaceHTML && Blockly.svgResize(miControlador.workspaceHTML, left_width)
+      miControlador.workspaceCSS && Blockly.svgResize(miControlador.workspaceCSS, left_width)
+      miControlador.workspaceJS && Blockly.svgResize(miControlador.workspaceJS, left_width)
+      console.log("render btn grandes")
       div_bloque_codigo.classList.remove("hidden")
       div_bloque_codigo.classList.remove("fondo_gris")
       btnsMayores["btn-bloque"].classList.contains("button_focus") && prenderBtnSegunDiv(e.target)
@@ -142,7 +149,15 @@ function handelClickVisibilityWorkSpaces(e) {
       btn.classList.remove("button_focus")
    })
    e.target.classList.add("button_focus")
-
+   if(btnsMenores["btn-html"].classList.contains("button_focus")){
+      console.log("prendido el btn-html")
+      // let panel_izq_width = 100 / parseFloat(getComputedStyle(cajas.panel_izq_r2, '').width)
+      // let left_width = (parseFloat(getComputedStyle(cajas.b_bloque_r2, '').width) + e.movementX) * panel_izq_width;
+      // miControlador.workspaceHTML && Blockly.svgResize(miControlador.workspaceHTML, left_width)
+   }
+   if(btnsMenores["btn-css"].classList.contains("button_focus")){
+      console.log("prendido el btn-css")
+   }
    //oculto todos los wsp y todos los div de codigo
    const lista_id_wp = ["#wsp-html", "#wsp-css", "#wsp-js", "#codigo-html", "#codigo-css", "#codigo-js"]
    lista_id_wp.forEach(elemento => {
@@ -154,6 +169,7 @@ function handelClickVisibilityWorkSpaces(e) {
    const diccionario_wsp_bloques = { "btn-html": '#wsp-html', "btn-css": '#wsp-css', "btn-js": '#wsp-js' },
       diccionario_wsp_codigo = { "btn-html": '#codigo-html', "btn-css": '#codigo-css', "btn-js": '#codigo-js' }
    const elemento_ventana_wsp = document.querySelector(diccionario_wsp_bloques[e.target.id]);
+   //console.log(elemento_ventana_wsp.id.split("-")[1])
    elemento_ventana_wsp.classList.remove("hidden")
    const elemento_ventana_codigo = document.querySelector(diccionario_wsp_codigo[e.target.id]);
    elemento_ventana_codigo.classList.remove("hidden")
