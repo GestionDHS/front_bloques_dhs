@@ -217,18 +217,18 @@ class Controlador {
   crearInyectarWorkspace(idElemento, objetoConfig,tipo) {
     if(tipo==="HTML"){
       this.workspaceHTML = Blockly.inject(idElemento, objetoConfig);
-      this.workspace.html = this.workspaceHTML
+      this.workspace.HTML = this.workspaceHTML
       
       // console.log("Created workspaceHTML:"+this.workspaceHTML)
     }
     if(tipo==="CSS"){
       this.workspaceCSS = Blockly.inject(idElemento, objetoConfig)
-      this.workspace.css = this.workspaceCSS
+      this.workspace.CSS = this.workspaceCSS
       // console.log("Created workspaceCSS:"+ this.workspaceCSS);
     }
     if(tipo==="JS"){
       this.workspaceJS = Blockly.inject(idElemento, objetoConfig);
-      this.workspace.js = this.workspaceJS
+      this.workspace.JS = this.workspaceJS
     }
   }
 
@@ -249,12 +249,9 @@ class Controlador {
     }
   }
   cargarBloquesSerializados(bloquesSerializados,tipo) {
-    console.log("aca")
-    console.log(bloquesSerializados)
-    console.log(this.workspace[tipo.toLowerCase()])
       return Blockly.serialization.workspaces.load(
         bloquesSerializados,
-        this.workspace[tipo.toLowerCase()])
+        this.workspace[tipo])
     
     // if(tipo==="HTML"){
     //   return Blockly.serialization.workspaces.load(
@@ -275,7 +272,6 @@ class Controlador {
     // --load hace el clear previo--
   }
   setearYCargarBloquesIniciales(bloquesSerealizados,tipo) {
-    console.log(tipo)
     if(tipo==="HTML"){
       console.log("workspaceHTML before loading:", this.workspaceHTML);
       this.bloquesInicialesHTML = bloquesSerealizados;
@@ -675,10 +671,10 @@ class Controlador {
 
   setearEventoCambioWorkspace(callback,tipo) {
     this.eventoCambioWorkspaceActual
-      ? this.workspace[tipo.toLowerCase()].removeChangeListener(this.eventoCambioWorkspaceActual)
+      ? this.workspace[tipo].removeChangeListener(this.eventoCambioWorkspaceActual)
       : null;
     this.eventoCambioWorkspaceActual =
-    this.workspace[tipo.toLowerCase()].addChangeListener(callback);
+    this.workspace[tipo].addChangeListener(callback);
   }
 
   setearEventoCambioWorkspaceStandard(tipo) {
